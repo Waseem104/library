@@ -8,9 +8,9 @@ const Home = () => {
         <div className="col-md-6 mb-4 mb-md-0">
           <h1 className="display-4 fw-bold mb-3">Welcome to LibraryX</h1>
           <p className="lead text-muted">
-            Discover, borrow, and manage your favorite books with ease. Our digital
-            library platform is designed for book lovers, students, and lifelong
-            learners.
+            Discover, borrow, and manage your favorite books with ease. Our
+            digital library platform is designed for book lovers, students, and
+            lifelong learners.
           </p>
           <ul className="list-unstyled mt-4">
             <li className="mb-2 d-flex align-items-center">
@@ -20,6 +20,10 @@ const Home = () => {
             <li className="mb-2 d-flex align-items-center">
               <BsCheckCircleFill className="text-success me-2" />
               Easy Borrow & Return
+            </li>
+            <li className="mb-2 d-flex align-items-center">
+              <BsCheckCircleFill className="text-success me-2" />
+              Personalized Recommendations
             </li>
             <li className="mb-2 d-flex align-items-center">
               <BsCheckCircleFill className="text-success me-2" />

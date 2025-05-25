@@ -3,10 +3,13 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import ConfirmModal from "../Components/Modal/ConfirmModal";
 
 const Books = () => {
   const [books, setBooks] = useState([]);
   const { user } = useAuth();
+  const [showModal, setShowModal] = useState(false);
+  const [bookToDelete, setBookToDelete] = useState(null);
 
   const navigate = useNavigate();
 
@@ -35,11 +38,11 @@ const Books = () => {
     fetchBooks();
   }, []);
 
-  const handleDelete = async (bookId) => {
+  const handleDelete = async () => {
     try {
       const token = localStorage.getItem("token");
       const { data } = await axios.delete(
-        `${import.meta.env.VITE_API_URL}/api/books/delete-book/${bookId}`,
+        `${import.meta.env.VITE_API_URL}/api/books/delete-book/${bookToDelete}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -48,6 +51,8 @@ const Books = () => {
       );
       if (data?.success) {
         fetchBooks();
+        setBookToDelete(null);
+        setShowModal(false);
       }
     } catch {
       // console.log("error in fetching books");
@@ -56,6 +61,11 @@ const Books = () => {
 
   const handleEdit = (book) => {
     navigate("/add-book", { state: { book } });
+  };
+
+  const openDeleteModal = (bookId) => {
+    setBookToDelete(bookId);
+    setShowModal(true);
   };
   return (
     <div className="container mt-5">
@@ -87,7 +97,7 @@ const Books = () => {
                         <FaEdit size={20} />
                       </button>
                       <button
-                        onClick={() => handleDelete(book._id)}
+                        onClick={() => openDeleteModal(book._id)}
                         className="btn btn-link text-danger p-0"
                         title="Delete"
                       >
@@ -101,6 +111,14 @@ const Books = () => {
           ))}
         </div>
       )}
+      {/* confirm modal */}
+      <ConfirmModal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={handleDelete}
+        title="Delete Book"
+        body="Are you sure you want to delete this book"
+      />
     </div>
   );
 };

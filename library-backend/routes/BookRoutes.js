@@ -25,7 +25,8 @@ const storage = multer.diskStorage({
 
 const uploads = multer({ storage });
 
-bookRouter.get("/get-all", authMiddleware, getAllBooksController);
+bookRouter.get("/get-all", getAllBooksController);
+
 bookRouter.post(
   "/add-book",
   authMiddleware,
